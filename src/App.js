@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import { initializeApp } from './actions/appActions'
 import { fetchBalances } from './actions/balanceActions'
 
 class App extends Component {
-  render() {
+  componentDidMount () {
+    this.props.initializeApp()
+  }
+  render () {
     return (
       <div className="app">
         <header>
@@ -27,7 +31,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
- fetchBalances: () => dispatch(fetchBalances()),
+  initializeApp: () => dispatch(initializeApp()),
+  fetchBalances: () => dispatch(fetchBalances()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)
