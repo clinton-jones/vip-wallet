@@ -31,6 +31,8 @@ export function initializeApp () {
     if (!hasCometExtension) {
       return dispatch({
         type: SET_APP_INITIALIZED,
+        hasCometExtension: false,
+        tokens: {},
       })
     }
 
