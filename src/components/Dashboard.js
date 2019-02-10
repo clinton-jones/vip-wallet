@@ -6,6 +6,8 @@ import PropTypes from 'prop-types'
 import { enableThor } from '../actions/appActions'
 import { fetchBalances } from '../actions/balanceActions'
 
+import copy from 'copy-to-clipboard'
+
 import QRCode from 'qrcode.react'
 
 import { withStyles } from '@material-ui/core/styles'
@@ -33,14 +35,32 @@ const styles = theme => ({
 })
 
 class Dashboard extends Component {
+  constructor (props) {
+    super(props)
+    this.state = {}
+    this.balanceInterval = null
+  }
   componentDidMount () {
-    this.props.fetchBalances()
+    this.balanceInterval = setInterval(this.props.fetchBalances, 5000)
+  }
+  componentWillUnmount () {
+    clearInterval(this.balanceInterval)
   }
   render () {
-    const { account, balances, classes, tokens } = this.props
+    const { account } = this.props
     return (
       <div className="dashboard">
-
+        {!!account && this.renderDashboardContent()}
+        <EnableThorDialog
+          handleEnableClick={this.handleEnableClick}
+          isOpen={!account} />
+      </div>
+    )
+  }
+  renderDashboardContent () {
+    const { account, balances, classes, tokens } = this.props
+    return (
+      <React.Fragment>
         <Grid
           className={classes.root}
           container
@@ -57,7 +77,7 @@ class Dashboard extends Component {
           <Typography variant="body1" paragraph={true}>
             {account}
           </Typography>
-          <Button variant="contained">
+          <Button variant="contained" onClick={this.handleCopyClick}>
             Copy Address
           </Button>
         </Grid>
@@ -89,12 +109,12 @@ class Dashboard extends Component {
             </List>
           </Paper>
         </div>
-
-        <EnableThorDialog
-          handleEnableClick={this.handleEnableClick}
-          isOpen={!account} />
-      </div>
+      </React.Fragment>
     )
+  }
+  handleCopyClick = () => {
+    const { account } = this.props
+    copy(account)
   }
   handleEnableClick = () => {
     this.props.enableThor()
@@ -105,7 +125,7 @@ class Dashboard extends Component {
     this.sendTransaction(tx)
   }
   async sendTransaction (transaction) {
-    const { web3 } = this.props
+    // const { web3 } = this.props
     // const txReceipt = await web3.eth.sendTransaction(transaction)
   }
 }

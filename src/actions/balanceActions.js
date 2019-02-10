@@ -13,6 +13,8 @@ export function fetchBalances () {
 
     const { account, tokens } = state.app
 
+    if (!account) return
+
     const tokenBalances = {}
     for (const tokenKey of Object.keys(tokens)) {
       const token = tokens[tokenKey]

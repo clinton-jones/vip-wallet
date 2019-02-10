@@ -33,11 +33,8 @@ const EnableThorDialog = (props) => {
           VIP Wallet needs permission from Comet to access your public address.
         </DialogContentText>
         <DialogActions>
-          <Button color="primary">
-            Cancel
-          </Button>
           <Button onClick={handleEnableClick} color="primary" autoFocus>
-            Agree
+            Allow
           </Button>
         </DialogActions>
       </DialogContent>
