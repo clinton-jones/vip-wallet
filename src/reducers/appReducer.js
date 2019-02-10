@@ -1,21 +1,32 @@
-import { SET_APP_INITIALIZED,
-         SET_HAS_COMET,
+import { SET_ACCOUNT,
+         SET_APP_INITIALIZED,
          SET_THOR_ENABLED
        } from '../actions/appActions'
 
 export default (
   state = {
-    hasComet: false,
+    account: null,
+    hasCometExtension: false,
     initialized: false,
     thorEnabled: false,
+    web3: null,
   },
   action,
 ) => {
   switch (action.type) {
+    case SET_ACCOUNT:
+      return {
+        ...state,
+        account: action.account,
+      }
     case SET_APP_INITIALIZED:
-      return { ...state, initialized: true }
-    case SET_HAS_COMET:
-      return { ...state, hasComet: action.hasComet }
+      return {
+        ...state,
+        account: action.account,
+        initialized: true,
+        hasCometExtension: action.hasCometExtension,
+        web3: action.web3,
+      }
     case SET_THOR_ENABLED:
       return { ...state, thorEnabled: action.isEnabled }
     default:

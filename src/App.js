@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
+import PropTypes from 'prop-types'
+
 import { initializeApp } from './actions/appActions'
 
 import AppBar from '@material-ui/core/AppBar'
@@ -16,7 +18,7 @@ class App extends Component {
     this.props.initializeApp()
   }
   render () {
-    const { hasComet } = this.props.app
+    const { hasCometExtension } = this.props
     return (
       <div className="app">
         <AppBar position="static">
@@ -27,8 +29,8 @@ class App extends Component {
           </Toolbar>
         </AppBar>
         <main>
-          {!hasComet && <GetComet />}
-          {hasComet && <Dashboard />}
+          {!hasCometExtension && <GetComet />}
+          {hasCometExtension && <Dashboard />}
         </main>
         <footer>
           <span>&copy; 2019 the comets of cometverse</span>
@@ -38,8 +40,12 @@ class App extends Component {
   }
 }
 
+App.propTypes = {
+  hasCometExtension: PropTypes.bool.isRequired,
+}
+
 const mapStateToProps = state => ({
- app: state.app,
+ hasCometExtension: state.app.hasCometExtension,
 })
 
 const mapDispatchToProps = dispatch => ({
