@@ -9,6 +9,7 @@ export default (
     hasCometExtension: false,
     initialized: false,
     thorEnabled: false,
+    tokens: {},
     web3: null,
   },
   action,
@@ -25,6 +26,7 @@ export default (
         account: action.account,
         initialized: true,
         hasCometExtension: action.hasCometExtension,
+        tokens: action.tokens,
         web3: action.web3,
       }
     case SET_THOR_ENABLED:

@@ -8,3 +8,42 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: $lightGrey;
 }
+
+.token-list {
+  max-width: 512px;
+  margin: 0 auto;
+}
+
+.token-list-item {
+  display: flex;
+  flex: 1;
+  height: 64px;
+  align-items: center;
+  .token-icon {
+    width: 64px;
+    text-align: center;
+    img {
+      height: 32px;
+    }
+  }
+  .token-name {
+    font-weight: 500;
+  }
+  .token-balance {
+    flex: 1;
+    text-align: right;
+    .balance {
+      display: flex;
+      flex: 1;
+      justify-content: flex-end;
+      .currency {
+        padding-left: 8px;
+      }
+    }
+  }
+}
+
+footer {
+  text-align: center;
+  padding: 64px 0;
+}

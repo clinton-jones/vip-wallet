@@ -5,6 +5,25 @@ export const SET_THOR_ENABLED = 'SET_THOR_ENABLED'
 
 const Web3 = require("web3")
 
+const abi = [
+  // balanceOf
+  {
+    "constant":true,
+    "inputs":[{"name":"_owner","type":"address"}],
+    "name":"balanceOf",
+    "outputs":[{"name":"balance","type":"uint256"}],
+    "type":"function"
+  },
+  // decimals
+  {
+    "constant":true,
+    "inputs":[],
+    "name":"decimals",
+    "outputs":[{"name":"","type":"uint8"}],
+    "type":"function"
+  }
+]
+
 export function initializeApp () {
   return async (dispatch) => {
 
@@ -18,10 +37,17 @@ export function initializeApp () {
     const web3 = await getWeb3()
     const addresses = await web3.eth.getAccounts()
 
+    const tokens = require('../tokens.json')
+    for (const tokenKey of Object.keys(tokens)) {
+      const token = tokens[tokenKey]
+      tokens[tokenKey].contract = new web3.eth.Contract(abi, token.contractAddress)
+    }
+
     dispatch({
       type: SET_APP_INITIALIZED,
       account: addresses[0],
       hasCometExtension,
+      tokens,
       web3,
     })
   }
